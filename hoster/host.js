@@ -87,7 +87,7 @@ function server() {
 
     wss.on("connection",(a,b) => require("./websocket.js").connection(a,b,wss));
 
-    server.listen(3000,"0.0.0.0",() => {
+    server.listen(3000,() => {
         console.log("Listening on port 3000.\nhttp://localhost:3000/");
     });
 
