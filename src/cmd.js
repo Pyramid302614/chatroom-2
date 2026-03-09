@@ -8,30 +8,22 @@ module.exports = {
         return false;
 
     },
-    processCMD(req,res) {
-        
-        const ip = req.socket.remoteAddress;
-        const url = req.url;
+    processCMD(full,ip) {
 
-        var cmd = url.split("/")[2];
+        var cmd = full.split(":")[0];
         var args = [];
-        try { args = url.split("/")[3].split(","); } catch(ignored) {}
+        try { args = full.split(":")[1].split(","); } catch(ignored) {}
 
         try { 
             const result = commands[cmd](args,ip);
             if(result != null) {
-                res.writeHead(200,{ "Content-Type": "text/plain" });
-                res.end(result + "");
-                return;
+                return (result + "");
             }
         } catch(e) {
-            res.writeHead(200,{ "Content-Type": "text/plain" });
-            res.end("An error occured while processing that command:\n\nCommand: " + cmd + "\nArgs: " + args.toString()+"\n\nError: " + e.message);
-            return;
+            return ("An error occured while processing that command:\n\nCommand: " + cmd + "\nArgs: " + args.toString()+"\n\nError: " + e.message);
         }
 
-        res.writeHead(200,{ "Content-Type": "text/plain" });
-        res.end("Command sent!\n\nCommand: " + cmd + "\nArgs: " + args.toString());
+        return ("Command sent!\n\nCommand: " + cmd + "\nArgs: " + args.toString());
 
     }
 }
@@ -61,17 +53,22 @@ const commands = {
             if(user_.nickname == nickname) pass = false;
         }
 
-        if(require("../src/users.js").indexOf(ip) == -1) require("../src/users.js").add(ip,{
+        if(pass &&require("../src/users.js").indexOf(ip) == -1) require("../src/users.js").add(ip,{
             nickname: nickname,
             ip: ip
         });
         if(pass) require("../src/users.js").update(ip,{nickname:nickname});
-        return true;
+        return pass;
 
     },
     nickname_get(args,ip) {
 
-        return require("../src/users.js").get(ip).nickname;
+        if(require("../src/users.js").indexOf(ip) == -1) require("../src/users.js").add(ip,{
+            nickname: "Anonymous",
+            ip: ip
+        });
+        const user = require("../src/users.js").get(ip);
+        return user.nickname ?? "Anonymous";
 
     }
 

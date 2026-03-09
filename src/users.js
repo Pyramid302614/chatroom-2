@@ -9,7 +9,7 @@ module.exports = {
         const users = JSON.parse(fs.readFileSync("src/users.json","utf-8"));
         user.ip = ip;
         users.push(user);
-        fs.writeFile("src/users.json",JSON.stringify(users,null,2),"utf-8",()=>{});
+        fs.writeFileSync("src/users.json",JSON.stringify(users,null,2),"utf-8",()=>{});
     },
     update(ip,properties) {
         const users = JSON.parse(fs.readFileSync("src/users.json","utf-8"));

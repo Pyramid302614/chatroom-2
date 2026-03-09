@@ -10,5 +10,21 @@
   {
     "nickname": "imnotsteve",
     "ip": "::ffff:205.210.19.215"
+  },
+  {
+    "nickname": "π",
+    "ip": "::1"
+  },
+  {
+    "nickname": "Pyramid30",
+    "ip": "::ffff:127.0.0.1"
+  },
+  {
+    "nickname": "Anonymous",
+    "ip": "::ffff:107.115.44.146"
+  },
+  {
+    "nickname": "Pyramid30",
+    "ip": "::ffff:107.115.44.147"
   }
 ]

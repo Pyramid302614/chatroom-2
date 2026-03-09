@@ -4,6 +4,8 @@ const ws = require("ws");
 
 const CMD = require("../src/cmd.js");
 
+const port = 3000;
+
 process.addListener("uncaughtException",(e) => {
     console.error(e);
 });
@@ -17,7 +19,9 @@ function request(req,res,nested) {
     
     // Command check
     if(CMD.isCommand(req.url)) {
-        CMD.processCMD(req,res);
+        res.writeHead(200,{"Content-Type":"text/plain"});
+        const full = req.url.slice(5); // "/cmd/".length
+        res.end(CMD.processCMD(full,req.socket.remoteAddress));
         return;
     }
 
@@ -68,10 +72,13 @@ function request(req,res,nested) {
             }
         
         // Variables
-       data = data.replaceAll("&&ip",req.socket.remoteAddress);
+        data = data.replaceAll("&&ip",req.socket.remoteAddress);
         if(["::1","98.160.191.168"].includes(req.socket.remoteAddress)) {
             data = data.replaceAll("pyshomecomputer.duckdns.org","localhost");
         }
+        data = data.replaceAll("&&port",port);
+        data = data.replaceAll("&&host","pyshomecomputer.duckdns.org");
+        data = data.replaceAll("&&&&","&&");
 
         res.writeHead(code,{ "Content-Type": type });
         res.end(data);
@@ -87,8 +94,8 @@ function server() {
 
     wss.on("connection",(a,b) => require("./websocket.js").connection(a,b,wss));
 
-    server.listen(3000,() => {
-        console.log("Listening on port 3000.\nhttp://localhost:3000/");
+    server.listen(port,() => {
+        console.log("Listening on port "+port+".\nhttp://localhost:"+port+"/");
     });
 
 }

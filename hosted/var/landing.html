@@ -6,7 +6,7 @@
     </head>
     <body>
 
-        <input type="text" id="textbox" value="" placeholder="Enter message here...">
+        <input type="text" id="textbox" value="" autofocus autocomplete="off" placeholder="Enter message here...">
         <input type="button" id="sendbutton" value="Send">
 
         <span>&nbsp;|&nbsp;</span>
@@ -20,6 +20,8 @@
 
         <span id="content">Loading content...</span>
 
-        <script src="./var/script.js"></script>
+        <script src="./var/script.js"></script> <!-- Master Script -->
+        <script src="./var/ws.js"></script>
+        <script src="./var/cmd.js"></script>
     </body>
 </html>
