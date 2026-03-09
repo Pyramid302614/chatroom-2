@@ -4,7 +4,7 @@ const ws = require("ws");
 
 const CMD = require("../src/cmd.js");
 
-const port = 3000;
+const port = 8080;
 
 process.addListener("uncaughtException",(e) => {
     console.error(e);
