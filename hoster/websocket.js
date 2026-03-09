@@ -1,3 +1,5 @@
+const { WebSocket } = require("ws");
+
 module.exports = {
     connection(ws,req,wss) {
 
