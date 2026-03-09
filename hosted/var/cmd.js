@@ -46,7 +46,7 @@ async function cmd(name,args) {
     }
 
     // Wait for WS to be open
-    if(ws && ws?.readyState == 1) await new Promise(resolve =>
+    if(!ws || ws?.readyState != 1) await new Promise(resolve =>
         setInterval(() => {
             if(ws && ws?.readyState == 1) resolve();
         }, 1000)
