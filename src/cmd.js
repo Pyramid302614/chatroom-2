@@ -55,7 +55,7 @@ const commands = {
 
         if(pass &&require("../src/users.js").indexOf(ip) == -1) require("../src/users.js").add(ip,{
             nickname: nickname,
-            ip: ip
+            ip: [ip]
         });
         if(pass) require("../src/users.js").update(ip,{nickname:nickname});
         return pass;
@@ -63,13 +63,18 @@ const commands = {
     },
     nickname_get(args,ip) {
 
-        if(require("../src/users.js").indexOf(ip) == -1) require("../src/users.js").add(ip,{
-            nickname: "Anonymous",
-            ip: ip
-        });
-        const user = require("../src/users.js").get(ip);
+        const user = require("../src/users.js").get(args[0]);
         return user.nickname ?? "Anonymous";
 
-    }
+    },
+    secret(args,ip) {
+        
+        const secret = args[0];
+        for(const user of require("../src/users.js").getAll()) {
+            if(user.secret == secret) return user;
+        }
+        return null;
+
+    },
 
 }

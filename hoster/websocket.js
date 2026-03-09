@@ -1,5 +1,7 @@
 const { WebSocket } = require("ws");
 
+const CMD = require("../src/cmd.js");
+
 module.exports = {
     connection(ws,req,wss) {
 
@@ -46,14 +48,14 @@ module.exports = {
                 break;
                 
             case "command":
-                const CMD = require("../src/cmd.js");
                 const cmd = msg.split(":")[1]+":"+msg.split(":")[2];
                 ws.send("commandresponse:"+CMD.processCMD(cmd,req.socket.remoteAddress)+"&&&&"+msg.split(":")[3]);
                 break;
             case "admin_sysmsg":
                 if(msg.split(":")[1] == "py") {
                     sendAll("system:"+msg.split(":")[2]);
-                } 
+                }
+                break;
         }
 
         });
