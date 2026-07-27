@@ -17,7 +17,7 @@ module.exports = {
         for(const property of Object.keys(properties)) {
             users[Object.keys(users)[userIndex]][property] = properties[property];
         }
-        fs.writeFile("src/users.json",JSON.stringify(users,null,2),"utf-8",()=>{});
+        fs.writeFileSync("src/users.json",JSON.stringify(users,null,2),"utf-8");
     },
     get(ip) {
         const users = JSON.parse(fs.readFileSync("src/users.json","utf-8"));
