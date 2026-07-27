@@ -64,7 +64,7 @@ const commands = {
     nickname_get(args,ip) {
 
         const user = require("../src/users.js").get(args[0]);
-        return user.nickname ?? "Anonymous";
+        return user?.nickname ?? "Anonymous";
 
     },
     secret(args,ip) {
